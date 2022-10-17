@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./style.css";
 import {
   Table,
   Thead,
@@ -17,6 +18,9 @@ import {
   Text,
   Input,
   Center,
+  Grid,
+  GridItem,
+  Box,
 } from "@chakra-ui/react";
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";
@@ -53,11 +57,13 @@ const Product = () => {
     }
   };
   const handelSearch = async (item) => {
-    const result = await axios.get(
-      `http://localhost:3600/api/product/search/${item}`
-    );
-    if (result) {
-      setdata(result.data);
+    if (item) {
+      const result = await axios.get(
+        `http://localhost:3600/api/product/search/${item}`
+      );
+      if (result) {
+        setdata(result.data);
+      }
     } else {
       getProduct();
     }
@@ -102,7 +108,7 @@ const Product = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {currentItems.map((data, index) => {
+            {currentItems.length > 0? currentItems.map((data, index) => {
               return (
                 <>
                   <Tr key={index}>
@@ -125,26 +131,30 @@ const Product = () => {
                   </Tr>
                 </>
               );
-            })}
+            }):<Heading ml="500px" pt="80px">product not found</Heading>}
           </Tbody>
         </Table>
       </TableContainer>
-
-      {pages.map((number) => {
-        return (
-          <>
-            <li
-              key={number}
-              id={number}
-              onClick={(e) => {
-                handleClick(e.target.id);
-              }}
-            >
-              {number}
-            </li>
-          </>
-        );
-      })}
+      <Box mt={50} ml="500px">
+        {pages.map((number) => {
+          return (
+            <>
+              <ul className="pageNumbers">
+                <li
+                  className={currentPage == number ? "active" : null}
+                  key={number}
+                  id={number}
+                  onClick={(e) => {
+                    handleClick(e.target.id);
+                  }}
+                >
+                  {number}
+                </li>
+              </ul>
+            </>
+          );
+        })}
+      </Box>
     </>
   );
 };
