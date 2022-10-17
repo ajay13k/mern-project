@@ -63,7 +63,9 @@ const Product = () => {
     }
   };
 
-  const handleClick = (id) => {};
+  const handleClick = (id) => {
+    setcurrentPage(id);
+  };
 
   return (
     <>
