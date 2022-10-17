@@ -13,8 +13,6 @@ const Navbar = () => {
     <Box height="45px" w="100%" bg="#ccccff">
       <HStack pt={3} gap="40px" pl={20}>
         <NavLink to="/product">Product</NavLink>
-        <NavLink to="/addproduct">Add Product</NavLink>
-        <NavLink>Update Product</NavLink>
         <NavLink>Profile</NavLink>
         <NavLink onClick={handleLogout}>Logout</NavLink>
       </HStack>

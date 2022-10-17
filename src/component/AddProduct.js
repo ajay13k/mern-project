@@ -39,7 +39,7 @@ function Addproduct() {
       .then((response) => {
         if (response) {
           navigate("/product");
-          alert("product created successfuly");
+          alert("add product successfuly");
         }
       });
   };

@@ -4,6 +4,7 @@ import Login from "./component/Login";
 import Product from "./component/Product";
 import Signup from "./component/Signup";
 import Addproduct from "./component/AddProduct";
+import UpdateProduct from "./component/UpdateProduct";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/navbar" element={<Navbar />}></Route>
             <Route path="/addproduct" element={<Addproduct />}></Route>
             <Route path="/product" element={<Product />}></Route>
+            <Route path="/update/:id" element={<UpdateProduct />}></Route>
         </Routes>
       </BrowserRouter>
     </>
