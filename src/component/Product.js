@@ -21,6 +21,7 @@ import {
   Grid,
   GridItem,
   Box,
+  Select,
 } from "@chakra-ui/react";
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";
@@ -44,6 +45,7 @@ const Product = () => {
   const getProduct = async () => {
     const data = await axios.get(`${API.getproduct}`);
     setdata(data.data.data);
+    console.log(data);
   };
   useEffect(() => {
     getProduct();
@@ -70,6 +72,19 @@ const Product = () => {
     setcurrentPage(id);
   };
 
+  const handelsubmit = (item) => {
+   const post =  data.filter((e)=>{
+      return(
+       e.category === item
+
+      )
+
+    })
+    setdata(post)
+    console.log(post)
+
+  };
+
   return (
     <>
       <Navbar />
@@ -92,6 +107,16 @@ const Product = () => {
             {" "}
             <NavLink to="/addproduct">Add Product</NavLink>
           </Text>
+          <Select
+            placeholder="Select option"
+            onChange={(e) => {
+              handelsubmit(e.target.value);
+            }}
+          >
+            <option value="mobile">mobile</option>
+            <option value="data">data</option>
+
+          </Select>
         </HStack>
 
         <Table size="sm">
