@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { API } from "./config";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +35,7 @@ function Signup() {
 
   const creatUser = async () => {
     await axios
-      .post("http://localhost:3600/api/user/create", data)
+      .post(`${API.signup}`, data)
       .then((response) => {
         if(response){
           alert("user created successfuly")

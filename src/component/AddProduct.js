@@ -13,11 +13,13 @@ import {
   Text,
   useColorModeValue,
   Textarea,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
+import { API } from "./config";
 
 function Addproduct() {
   const [name, setname] = useState("");
@@ -35,7 +37,7 @@ function Addproduct() {
 
   const creatProduct = async () => {
     await axios
-      .post("http://localhost:3600/api/product/create", data)
+      .post(`${API.addproduct}`, data)
       .then((response) => {
         if (response) {
           navigate("/product");

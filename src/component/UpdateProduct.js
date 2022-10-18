@@ -20,12 +20,14 @@ import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { API } from "./config";
 
 function UpdateProduct() {
   const [name, setname] = useState("");
   const [price, setprice] = useState("");
   const [category, setcategory] = useState("");
   const [description, setdescription] = useState("");
+
   const params = useParams();
   const navigate = useNavigate();
 
@@ -36,14 +38,12 @@ function UpdateProduct() {
     description: description,
   };
   const getbyidProduct = async () => {
-    await axios
-      .get(`http://localhost:3600/api/product/getbyid/${params.id}`)
-      .then((response) => {
-        setname(response.data.data.name);
-        setprice(response.data.data.name);
-        setcategory(response.data.data.name);
-        setdescription(response.data.data.name);
-      });
+    await axios.get(`${API.productbyid}/${params.id}`).then((response) => {
+      setname(response.data.data.name);
+      setprice(response.data.data.name);
+      setcategory(response.data.data.name);
+      setdescription(response.data.data.name);
+    });
   };
 
   useEffect(() => {
@@ -51,10 +51,7 @@ function UpdateProduct() {
   }, []);
 
   const updateProduct = async () => {
-    const result = await axios.put(
-      `http://localhost:3600/api/product/update/${params.id}`,
-      data
-    );
+    const result = await axios.put(`${API.updateproduct}/${params.id}`, data);
     if (result) {
       navigate("/product");
     }

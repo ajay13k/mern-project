@@ -24,6 +24,7 @@ import {
 } from "@chakra-ui/react";
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";
+import { API } from "./config";
 const Product = () => {
   const [data, setdata] = useState([]);
   const [currentPage, setcurrentPage] = useState(1);
@@ -41,7 +42,7 @@ const Product = () => {
   }
 
   const getProduct = async () => {
-    const data = await axios.get("http://localhost:3600/api/product/get");
+    const data = await axios.get(`${API.getproduct}`);
     setdata(data.data.data);
   };
   useEffect(() => {
@@ -49,18 +50,14 @@ const Product = () => {
   }, []);
 
   const handelDelete = async (id) => {
-    const response = await axios.delete(
-      `http://localhost:3600/api/product/delete/${id}`
-    );
+    const response = await axios.delete(`${API.deleteproduct}${id}`);
     if (response) {
       getProduct();
     }
   };
   const handelSearch = async (item) => {
     if (item) {
-      const result = await axios.get(
-        `http://localhost:3600/api/product/search/${item}`
-      );
+      const result = await axios.get(`${API.searchproduct}/${item}`);
       if (result) {
         setdata(result.data);
       }
@@ -108,30 +105,36 @@ const Product = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {currentItems.length > 0? currentItems.map((data, index) => {
-              return (
-                <>
-                  <Tr key={index}>
-                    <Td>{data.name}</Td>
-                    <Td>{data.price}</Td>data
-                    <Td>{data.category}</Td>
-                    <Td>{data.description}</Td>
-                    <Td>
-                      <Button
-                        onClick={() => {
-                          handelDelete(data._id);
-                        }}
-                      >
-                        Delete
-                      </Button>
-                      <NavLink to={"/update/" + data._id}>
-                        <Button>Edit</Button>
-                      </NavLink>
-                    </Td>
-                  </Tr>
-                </>
-              );
-            }):<Heading ml="500px" pt="80px">product not found</Heading>}
+            {currentItems.length > 0 ? (
+              currentItems.map((data, index) => {
+                return (
+                  <>
+                    <Tr key={index}>
+                      <Td>{data.name}</Td>
+                      <Td>{data.price}</Td>data
+                      <Td>{data.category}</Td>
+                      <Td>{data.description}</Td>
+                      <Td>
+                        <Button
+                          onClick={() => {
+                            handelDelete(data._id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                        <NavLink to={"/update/" + data._id}>
+                          <Button>Edit</Button>
+                        </NavLink>
+                      </Td>
+                    </Tr>
+                  </>
+                );
+              })
+            ) : (
+              <Heading ml="500px" pt="80px">
+                product not found
+              </Heading>
+            )}
           </Tbody>
         </Table>
       </TableContainer>

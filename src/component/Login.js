@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
+import { API } from "./config";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -24,7 +25,7 @@ function Login() {
 
   const login = async () => {
     axios
-      .post("http://localhost:3600/api/user/login", data)
+      .post(`${API.login}`, data)
 
       .then((response) => {
         if (response.data.data.token) {
