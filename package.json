@@ -2,6 +2,7 @@
   "name": "e-com",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://deb4-116-206-151-194.in.ngrok.io",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.11",
     "@chakra-ui/react": "^2.3.5",

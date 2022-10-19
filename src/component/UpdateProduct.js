@@ -124,6 +124,7 @@ function UpdateProduct() {
               </FormControl>
               <Stack spacing={10} pt={2}>
                 <Button
+                  
                   onClick={updateProduct}
                   loadingText="Submitting"
                   size="lg"
@@ -143,4 +144,5 @@ function UpdateProduct() {
     </>
   );
 }
+
 export default UpdateProduct;

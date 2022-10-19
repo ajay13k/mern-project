@@ -18,7 +18,7 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { API } from "./config";
 
 function Addproduct() {
@@ -36,14 +36,12 @@ function Addproduct() {
   };
 
   const creatProduct = async () => {
-    await axios
-      .post(`${API.addproduct}`, data)
-      .then((response) => {
-        if (response) {
-          navigate("/product");
-          alert("add product successfuly");
-        }
-      });
+    await axios.post(`${API.addproduct}`, data).then((response) => {
+      if (response) {
+        navigate("/product");
+        alert("add product successfuly");
+      }
+    });
   };
 
   return (

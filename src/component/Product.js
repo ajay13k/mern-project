@@ -26,7 +26,9 @@ import {
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";
 import { API } from "./config";
+import { m } from "framer-motion";
 const Product = () => {
+  const [filter, setfilter] = useState([]);
   const [data, setdata] = useState([]);
   const [currentPage, setcurrentPage] = useState(1);
   const [itemperPage, setitemperPage] = useState(5);
@@ -52,7 +54,7 @@ const Product = () => {
   }, []);
 
   const handelDelete = async (id) => {
-    const response = await axios.delete(`${API.deleteproduct}${id}`);
+    const response = await axios.delete(`${API.deleteproduct}/${id}`);
     if (response) {
       getProduct();
     }
@@ -73,16 +75,16 @@ const Product = () => {
   };
 
   const handelsubmit = (item) => {
-   const post =  data.filter((e)=>{
-      return(
-       e.category === item
+    console.log("select",item);
+    if (item === "all") {
+      getProduct();
+    }
+    const post = data.filter((e) => {
+      return e.category === item;
+    });
 
-      )
-
-    })
-    setdata(post)
-    console.log(post)
-
+    setfilter(post);
+    setdata(filter);
   };
 
   return (
@@ -109,13 +111,14 @@ const Product = () => {
           </Text>
           <Select
             placeholder="Select option"
+            defaulValue="all"
             onChange={(e) => {
               handelsubmit(e.target.value);
             }}
           >
+            <option defaulValue="all">all</option>
             <option value="mobile">mobile</option>
             <option value="data">data</option>
-
           </Select>
         </HStack>
 
@@ -136,7 +139,7 @@ const Product = () => {
                   <>
                     <Tr key={index}>
                       <Td>{data.name}</Td>
-                      <Td>{data.price}</Td>data
+                      <Td>{data.price}</Td>
                       <Td>{data.category}</Td>
                       <Td>{data.description}</Td>
                       <Td>
@@ -186,5 +189,15 @@ const Product = () => {
     </>
   );
 };
+
+// magento
+// mango
+// man
+// ma
+// m;            magento
+// ma;           mango   
+// man;          man 
+// mango;        ma
+// magento;      m 
 
 export default Product;
