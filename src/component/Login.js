@@ -13,13 +13,13 @@ import {
   useColorModeValue,
   FormHelperText,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "./config";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-function Login() {
+const Login = () => {
   const {
     register,
     handleSubmit,
@@ -103,8 +103,7 @@ function Login() {
                 </FormControl>
                 {/* {err && email.length <= 0 ? (
                   <FormHelperText color="red">email is required</FormHelperText>
-                ) : (
-                  ""
+                ) : (login
                 )} */}
               </FormControl>
               <FormControl>
@@ -112,8 +111,10 @@ function Login() {
                 <Input
                   {...register("password", {
                     required: true,
-                    minLength: 5,
-                    maxLength: 10,
+                    // minLength: 5,
+                    // maxLength: 10,
+                    pattern:
+                      /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/,
                   })}
                   name="password"
                   type="password"
@@ -126,13 +127,17 @@ function Login() {
                   {errors.password?.type === "required" &&
                     "password is required"}
                 </FormControl>
-                <FormControl color="red">
+                {/* <FormControl color="red">
                   {errors.password?.type === "minLength" &&
                     "minLength should be five"}
                 </FormControl>
                 <FormControl color="red">
                   {errors.password?.type === "maxLength" &&
                     "maxLength should be ten"}
+                </FormControl> */}
+                <FormControl color="red">
+                  {errors.password?.type === "pattern" &&
+                    " password must contain at least eight characters, at least one number and both lower and uppercase letters and special characters"}
                 </FormControl>
                 {/* {err && password.length <= 0 ? (
                   <FormHelperText color="red">
@@ -169,6 +174,6 @@ function Login() {
       </Stack>
     </Flex>
   );
-}
+};
 
 export default Login;

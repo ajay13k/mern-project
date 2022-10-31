@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { EmailIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { API } from "./config";
@@ -28,6 +29,7 @@ function Signup() {
   const [password, setpassword] = useState("");
   const [err, seterr] = useState(false);
   const [er, seter] = useState("");
+  const navigate = useNavigate()
 
   const data = {
     firstName: firstName,
@@ -40,6 +42,7 @@ function Signup() {
     await axios.post(`${API.signup}`, data).then((response) => {
       if (response) {
         alert("user created successfuly");
+        navigate("/login")
       }
     });
   };
