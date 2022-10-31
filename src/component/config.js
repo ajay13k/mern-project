@@ -9,3 +9,5 @@ export const API = {
   addproduct: `${BASE_URL}/api/product/create`,
   searchproduct: `${BASE_URL}/api/product/search`,
 };
+
+

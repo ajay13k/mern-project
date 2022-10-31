@@ -26,14 +26,13 @@ import {
 import Navbar from "./Navbar";
 import { NavLink } from "react-router-dom";
 import { API } from "./config";
-import { m } from "framer-motion";
 const Product = () => {
   const [filter, setfilter] = useState([]);
   const [data, setdata] = useState([]);
   const [currentPage, setcurrentPage] = useState(1);
   const [itemperPage, setitemperPage] = useState(5);
   const indexoflastitem = currentPage * itemperPage;
-  console.log(indexoflastitem);
+  console.log("indexoflast item", indexoflastitem);
   const indexoffirstitem = indexoflastitem - itemperPage;
   console.log(indexoffirstitem);
   const currentItems = data.slice(indexoffirstitem, indexoflastitem);
@@ -75,7 +74,7 @@ const Product = () => {
   };
 
   const handelsubmit = (item) => {
-    console.log("select",item);
+    console.log("select", item);
     if (item === "all") {
       getProduct();
     }
@@ -189,15 +188,4 @@ const Product = () => {
     </>
   );
 };
-
-// magento
-// mango
-// man
-// ma
-// m;            magento
-// ma;           mango   
-// man;          man 
-// mango;        ma
-// magento;      m 
-
 export default Product;

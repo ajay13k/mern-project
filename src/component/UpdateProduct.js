@@ -13,11 +13,12 @@ import {
   Text,
   useColorModeValue,
   Textarea,
+  ButtonSpinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { API } from "./config";
@@ -122,12 +123,24 @@ function UpdateProduct() {
                   />
                 </InputGroup>
               </FormControl>
-              <Stack spacing={10} pt={2}>
+              <HStack gap={20}>
+                <NavLink to="/product">
+                  {" "}
+                  <Button
+                    width={40}
+                    loadingText="Submitting"
+                    bg={"blue.400"}
+                    color={"white"}
+                    _hover={{
+                      bg: "blue.500",
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </NavLink>
                 <Button
-                  
                   onClick={updateProduct}
                   loadingText="Submitting"
-                  size="lg"
                   bg={"blue.400"}
                   color={"white"}
                   _hover={{
@@ -136,7 +149,7 @@ function UpdateProduct() {
                 >
                   UpdateProduct
                 </Button>
-              </Stack>
+              </HStack>
             </Stack>
           </Box>
         </Stack>
@@ -144,5 +157,4 @@ function UpdateProduct() {
     </>
   );
 }
-
 export default UpdateProduct;

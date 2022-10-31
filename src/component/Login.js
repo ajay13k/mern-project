@@ -11,21 +11,30 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 import { API } from "./config";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => setdata(data);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [dataobj, setdata] = useState([]);
+  const [err, seterror] = useState(false);
   const navigate = useNavigate();
   const data = { email, password };
-
   const login = async () => {
     axios
-      .post(`${API.login}`, data)
+      .post(`${API.login}`, dataobj)
 
       .then((response) => {
         if (response.data.data.token) {
@@ -40,11 +49,18 @@ function Login() {
         }
       })
       .catch((err) => {
-        if (email && password) {
-          alert("users detail are not correct");
+        if (dataobj.email && dataobj.password) {
+          alert("user details are not correct");
         }
       });
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (email.length === 0 && password.length === 0) {
+  //     seterror(true);
+  //   }
+  // };
 
   return (
     <Flex
@@ -64,44 +80,90 @@ function Login() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input
-                type="email"
-                onChange={(e) => {
-                  setemail(e.target.value);
-                }}
-              />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                onChange={(e) => {
-                  setpassword(e.target.value);
-                }}
-              />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link color={"blue.400"}>Forgot password?</Link>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <FormControl>
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  {...register("email", {
+                    required: true,
+                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                  })}
+                  name="email"
+                  type="text"
+                  // onChange={(e) => {
+                  //   setemail(e.target.value);
+                  // }}
+                />
+                <FormControl color="red">
+                  {errors.email?.type === "required" && "email is required"}
+                </FormControl>
+                <FormControl color="red">
+                  {errors.email?.type === "pattern" &&
+                    "email  must be a valid format"}
+                </FormControl>
+                {/* {err && email.length <= 0 ? (
+                  <FormHelperText color="red">email is required</FormHelperText>
+                ) : (
+                  ""
+                )} */}
+              </FormControl>
+              <FormControl>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  {...register("password", {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 10,
+                  })}
+                  name="password"
+                  type="password"
+                  // onChange={(e) => {
+                  //   setpassword(e.target.value);
+                  // }}
+                />
+
+                <FormControl color="red">
+                  {errors.password?.type === "required" &&
+                    "password is required"}
+                </FormControl>
+                <FormControl color="red">
+                  {errors.password?.type === "minLength" &&
+                    "minLength should be five"}
+                </FormControl>
+                <FormControl color="red">
+                  {errors.password?.type === "maxLength" &&
+                    "maxLength should be ten"}
+                </FormControl>
+                {/* {err && password.length <= 0 ? (
+                  <FormHelperText color="red">
+                    password is required
+                  </FormHelperText>
+                ) : (
+                  ""
+                )} */}
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox>Remember me</Checkbox>
+                  <Link color={"blue.400"}>Forgot password?</Link>
+                </Stack>
+                <Button
+                  type="submit"
+                  onClick={login}
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Login
+                </Button>
               </Stack>
-              <Button
-                onClick={login}
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                Login
-              </Button>
-            </Stack>
+            </form>
           </Stack>
         </Box>
       </Stack>
